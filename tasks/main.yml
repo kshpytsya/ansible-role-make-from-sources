@@ -1,0 +1,35 @@
+- name: "make from source {{ mfs__opts_name }} | Ensure archive directory"
+  file:
+    path: "{{ mfs__opts_archive_dir }}"
+    state: directory
+    mode: "0755"
+    owner: root
+
+- name: "make from source {{ mfs__opts_name }} | Check downloaded"
+  stat:
+    path: "{{ mfs__download_dest }}"
+  register: mfs__download_stats
+
+- name: "make from source {{ mfs__opts_name }} | Download"
+  get_url:
+    url: "{{ mfs__opts_url }}"
+    dest: "{{ mfs__download_dest }}"
+    force: yes
+    mode: 0400
+    checksum: "sha1:{{ mfs__opts_sha1 }}"
+  when: not(mfs__download_stats.stat.checksum is defined and mfs__download_stats.stat.checksum == mfs__opts_sha1)
+  notify: "{{ mfs__opts_notify }}"
+
+- name: "make from source {{ mfs__opts_name }} | Extract"
+  unarchive:
+    src: "{{ mfs__download_dest }}"
+    dest: "{{ mfs__unpacked_dir }}"
+    remote_src: yes
+    extra_opts: "{{ mfs__opts_unarchive_extra_opts }}"
+
+- name: "make from source {{ mfs__opts_name }} | make {{ item }}"
+  make:
+    chdir: "{{ mfs__unpacked_dir }}"
+    params: "{{ mfs__make_params }}"
+    target: "{{ item }}"
+  with_items: "{{ mfs__make_targets }}"

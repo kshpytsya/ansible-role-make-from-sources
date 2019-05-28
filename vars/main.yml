@@ -4,9 +4,9 @@ mfs__opts_url: "{{ mfs_opts.url }}"
 mfs__opts_sha1: "{{ mfs_opts.sha1 }}"
 
 # optional options
-mfs__src_dir: "{{ mfs_opts.src_dir | default('/usr/local/src/{}'.format(mfs__opts_name)) }}"
-mfs__archive_dir: "{{ mfs_opts.archive_dir | default(mfs__src_dir + '/distfiles') }}"
-mfs__unpacked_dir: "{{ mfs_opts.unpacked_dir | default(mfs__src_dir + '/unpacked') }}"
+mfs__opts_src_dir: "{{ mfs_opts.src_dir | default('/usr/local/src/{}'.format(mfs__opts_name)) }}"
+mfs__opts_archive_dir: "{{ mfs_opts.archive_dir | default(mfs__opts_src_dir + '/distfiles') }}"
+mfs__opts_unpacked_dir: "{{ mfs_opts.unpacked_dir | default(mfs__opts_src_dir + '/unpacked') }}"
 
 # note: this can be a list. Set to [] to disable notification
 mfs__opts_notify: "{{ mfs_opts.notify | default('restart {}'.format(mfs__opts_name)) }}"

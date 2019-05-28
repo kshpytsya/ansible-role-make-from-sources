@@ -1,9 +1,12 @@
-- name: "make from source {{ mfs__opts_name }} | Ensure archive directory"
+- name: "make from source {{ mfs__opts_name }} | Ensure {{ item }} directory"
   file:
-    path: "{{ mfs__opts_archive_dir }}"
+    path: "{{ item }}"
     state: directory
     mode: "0755"
     owner: root
+  with_items:
+  - "{{ mfs__opts_archive_dir }}"
+  - "{{ mfs__opts_unpacked_dir }}"
 
 - name: "make from source {{ mfs__opts_name }} | Check downloaded"
   stat:

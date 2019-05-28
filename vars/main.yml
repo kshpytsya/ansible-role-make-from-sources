@@ -14,9 +14,9 @@ mfs__opts_notify: "{{ mfs_opts.notify | default('restart {}'.format(mfs__opts_na
 # E.g.: "--strip-components=1" for .tar.*, or "-j" for .zip
 mfs__opts_unarchive_extra_opts: "{{ mfs_opts.unarchive_extra_opts | default([]) }}"
 # See https://docs.ansible.com/ansible/latest/modules/make_module.html#parameters
-mfs__make_params: "{{ mfs_opts.make_params | default({}) }}"
+mfs__opts_make_params: "{{ mfs_opts.make_params | default({}) }}"
 
-mfs__make_targets: "{{ mfs_opts.make_targets | default(['', 'install']) }}"
+mfs__opts_make_targets: "{{ mfs_opts.make_targets | default(['', 'install']) }}"
 
 # derrived variables
-mfs__download_dest: "{{ mfs__archive_dir + '/' + (mfs__opts_url | basename) }}"
+mfs__download_dest: "{{ mfs__opts_archive_dir + '/' + (mfs__opts_url | basename) }}"

@@ -23,13 +23,13 @@
 - name: "make from source {{ mfs__opts_name }} | Extract"
   unarchive:
     src: "{{ mfs__download_dest }}"
-    dest: "{{ mfs__unpacked_dir }}"
+    dest: "{{ mfs__opts_unpacked_dir }}"
     remote_src: yes
     extra_opts: "{{ mfs__opts_unarchive_extra_opts }}"
 
 - name: "make from source {{ mfs__opts_name }} | make {{ item }}"
   make:
-    chdir: "{{ mfs__unpacked_dir }}"
-    params: "{{ mfs__make_params }}"
+    chdir: "{{ mfs__opts_unpacked_dir }}"
+    params: "{{ mfs__opts_make_params }}"
     target: "{{ item }}"
-  with_items: "{{ mfs__make_targets }}"
+  with_items: "{{ mfs__opts_make_targets }}"
